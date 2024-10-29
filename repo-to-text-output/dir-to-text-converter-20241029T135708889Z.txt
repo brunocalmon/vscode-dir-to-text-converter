@@ -1,3 +1,237 @@
+./.vscode-test.mjs
+```
+import { defineConfig } from '@vscode/test-cli';
+
+export default defineConfig({
+	files: 'out/test/**/*.test.js',
+});
+
+```
+
+./.vscodeignore
+```
+.vscode/**
+.vscode-test/**
+out/**
+node_modules/**
+src/**
+.gitignore
+.yarnrc
+webpack.config.js
+vsc-extension-quickstart.md
+**/tsconfig.json
+**/eslint.config.mjs
+**/*.map
+**/*.ts
+**/.vscode-test.*
+
+```
+
+./CHANGELOG.md
+```
+# Change Log
+
+All notable changes to the "dir-to-text-converter" extension will be documented in this file.
+
+Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
+
+## [Unreleased]
+
+- Initial release
+```
+
+./LICENSE
+```
+MIT License
+
+Copyright (c) 2024 Bruno
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
+
+./README.md
+```
+# Dir to Text Converter
+
+This is a simple tool to transform an entire directory into a single text format, making it easier to use with AI generator models.
+
+## Technologies Used
+
+- **Visual Studio Code API**: For integrating with the VS Code environment.
+- **TypeScript**: For writing type-safe code.
+- **Node.js**: For running the extension and its dependencies.
+- **Webpack**: For bundling the extension's code.
+- **Mermaid**: For generating diagrams to visualize the functionality.
+
+## Functionality Diagram
+
+```mermaid
+flowchart TD
+    A[Start] --> B{Choose Conversion Mode}
+    B -->|Repository Converter| C[Traverse Entire Repository]
+    B -->|Directory Converter| D[Traverse Current Directory]
+    B -->|File Converter| E[Get Current File Content]
+    C --> F[Generate Output File in repo-to-text-output]
+    D --> F
+    E --> F
+    F --> G[Show Success Message]
+    G --> H[End]
+```
+
+## Requirements
+
+Before you begin, ensure you have the following installed:
+
+- **Node.js** (version 14.x or higher)
+- **npm** (comes with Node.js)
+- **Visual Studio Code**
+- **Yo (Yeoman)** for scaffolding the project
+
+You can install `Yo` globally using npm:
+
+```bash
+npm install -g yo
+```
+
+## Generating the Base Content
+
+To generate the base content for the extension, you can use the following commands:
+
+1. Open a terminal and run:
+   ```bash
+   yo code
+   ```
+2. Follow the prompts to set up your extension:
+   - Choose the type of extension you want to create (e.g., TypeScript).
+   - Provide a name, description, and other settings as prompted.
+3. This will create the basic structure of the extension in a new directory.
+
+## Manual Installation and Usage
+
+### Cloning the Repository
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/username/dir-to-text-converter.git
+   cd dir-to-text-converter
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+3. Open the project in Visual Studio Code:
+   ```bash
+   code .
+   ```
+
+### Running the Extension Locally Without Packaging
+
+1. Press `F5` to run the extension in a new VS Code window.
+2. Open the Command Palette (Ctrl + Shift + P).
+3. Type and select one of the following commands:
+   - **repository-converter**: Converts the entire repository into a text file.
+   - **dir-converter**: Converts only the current directory into a text file.
+   - **file-converter**: Converts only the currently opened file into a text file.
+
+### Packaging the Extension Locally
+
+To package the extension for publishing:
+
+1. Run the following command in the terminal:
+   ```bash
+   vsce package
+   ```
+
+This will create a `.vsix` file in the root directory.
+
+### Installing the Packaged Extension
+
+1. Open Visual Studio Code.
+2. Go to the Extensions section (Ctrl + Shift + X).
+3. Click on the three dots in the top-right corner and select "Install from VSIX..."
+4. Choose the `.vsix` file created in the previous step.
+
+## Using the Extension After Installation
+
+1. After installing, open the Command Palette (Ctrl + Shift + P).
+2. Type and select one of the following commands:
+   - **repository-converter**: Converts the entire repository into a text file.
+   - **dir-converter**: Converts only the current directory into a text file.
+   - **file-converter**: Converts only the currently opened file into a text file.
+3. The output will be saved in a file named `<name>-<timestamp>.txt` inside the `repo-to-text-output` directory.
+
+## Publishing the Extension
+
+To publish the extension, ensure you have a Visual Studio Marketplace account and run:
+
+```bash
+vsce publish
+```
+
+You may need to log in to your Azure DevOps account if prompted.
+
+## Contribution
+
+Feel free to contribute improvements. Open a pull request or an issue to discuss changes.
+
+## License
+
+This project is licensed under the terms specified in the [LICENSE](LICENSE) file.
+
+```
+
+./eslint.config.mjs
+```
+import typescriptEslint from "@typescript-eslint/eslint-plugin";
+import tsParser from "@typescript-eslint/parser";
+
+export default [{
+    files: ["**/*.ts"],
+}, {
+    plugins: {
+        "@typescript-eslint": typescriptEslint,
+    },
+
+    languageOptions: {
+        parser: tsParser,
+        ecmaVersion: 2022,
+        sourceType: "module",
+    },
+
+    rules: {
+        "@typescript-eslint/naming-convention": ["warn", {
+            selector: "import",
+            format: ["camelCase", "PascalCase"],
+        }],
+
+        curly: "warn",
+        eqeqeq: "warn",
+        "no-throw-literal": "warn",
+        semi: "warn",
+    },
+}];
+```
+
+./package-lock.json
+```
 {
   "name": "dir-to-text-converter",
   "version": "0.0.1",
@@ -4646,3 +4880,408 @@
     }
   }
 }
+
+```
+
+./package.json
+```
+{
+  "name": "dir-to-text-converter",
+  "displayName": "dir-to-text-converter",
+  "description": "This is a simple tool to transform the complete directory into a single te text format, to make ease to use with AI generator models",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.94.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "dir-to-text-converter.repositoryConverter",
+        "title": "Dir-To-Text: Repository Converter"
+      },
+      {
+        "command": "dir-to-text-converter.fileConverter",
+        "title": "Dir-To-Text: File Converter"
+      }
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/brunocalmon/dir-to-text-converter.git"
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run package",
+    "compile": "webpack",
+    "watch": "webpack --watch",
+    "package": "webpack --mode production --devtool hidden-source-map",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "npm run compile-tests && npm run compile && npm run lint",
+    "lint": "eslint src",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.9",
+    "@types/node": "^20.17.2",
+    "@types/vscode": "^1.94.0",
+    "@typescript-eslint/eslint-plugin": "^8.10.0",
+    "@typescript-eslint/parser": "^8.7.0",
+    "@vscode/test-cli": "^0.0.10",
+    "@vscode/test-electron": "^2.4.1",
+    "eslint": "^9.13.0",
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.6.3",
+    "webpack": "^5.95.0",
+    "webpack-cli": "^5.1.4"
+  },
+  "dependencies": {
+    "ignore": "^6.0.2",
+    "js-yaml": "^4.1.0"
+  }
+}
+
+```
+
+./src/extension.ts
+```
+import * as vscode from "vscode";
+import { Dirent } from "fs";
+import * as path from "path";
+import * as fs from "fs";
+import ignore from "ignore";
+
+// Function to generate a file name
+function generateFileName(baseName: string): string {
+  const timestamp = new Date().toISOString().replace(/[:.-]/g, ""); // Remove problematic characters for file systems
+  return `${baseName}-${timestamp}.txt`;
+}
+
+// Function to ensure that the output directory exists
+function ensureOutputDirectoryExists(): string {
+  const outputDir = path.join(
+    vscode.workspace.rootPath || "",
+    "repo-to-text-output"
+  );
+  if (!fs.existsSync(outputDir)) {
+    fs.mkdirSync(outputDir);
+  }
+  return outputDir;
+}
+
+// Function to load ignore patterns from .gitignore and user settings
+function loadIgnorePatterns(rootPath: string): string[] {
+  const gitignorePath = path.join(rootPath, ".gitignore");
+  let patterns: string[] = [];
+
+  // Check if .gitignore exists
+  if (fs.existsSync(gitignorePath)) {
+    const gitignoreContent = fs.readFileSync(gitignorePath, "utf-8");
+    patterns = gitignoreContent
+      .split("\n")
+      .filter((line: string) => line && !line.startsWith("#"));
+  } else {
+    console.log(`No .gitignore file found at ${rootPath}.`);
+  }
+
+  // Add user-defined ignore patterns
+  const configIgnoredPatterns = vscode.workspace
+    .getConfiguration("dir-to-text-converter")
+    .get<string[]>("ignoredPatterns");
+  if (configIgnoredPatterns) {
+    patterns = patterns.concat(configIgnoredPatterns);
+  }
+
+  return patterns;
+}
+
+// Function to check if a path should be ignored
+function shouldIgnorePath(
+  rootPath: string,
+  pathToCheck: string,
+  ig: ReturnType<typeof ignore>
+): boolean {
+  // Log the path being checked
+  console.log("Checking the rootPath:", rootPath);
+  console.log("Checking if the path should be ignored:", pathToCheck);
+
+  // Ensure rootPath is a directory
+  if (!fs.existsSync(rootPath) || !fs.lstatSync(rootPath).isDirectory()) {
+    throw new Error("Invalid rootPath. It must be a valid directory."); // Lança um erro se o rootPath for inválido
+  }
+
+  // Ensure the path is relative for the ignore patterns
+  const relativePath = path.relative(rootPath, pathToCheck);
+  console.log("Relative Path to ignore:", relativePath);
+
+  // Check if the relative path is valid before checking ignore patterns
+  if (!relativePath || relativePath.startsWith("..")) {
+    throw new Error(
+      `Invalid relative path: ${relativePath}. Path is not within the root directory.`
+    ); // Lança um erro se o relativePath for inválido
+  }
+
+  console.log("ShouldIgnore: %s", ig.ignores(relativePath));
+  return ig.ignores(relativePath);
+}
+
+// Main repository conversion function
+async function repositoryConverter() {
+  const workspaceFolders = vscode.workspace.workspaceFolders;
+  if (!workspaceFolders) {
+    vscode.window.showErrorMessage("No directory opened.");
+    return;
+  }
+
+  let content = "";
+  const rootPath = workspaceFolders[0].uri.fsPath;
+  const repoName = path.basename(rootPath);
+
+  // Load ignore patterns
+  const patterns = loadIgnorePatterns(rootPath);
+  const ig = ignore().add(patterns);
+
+  // Recursive directory reading function
+  function readDirRecursive(dir: string) {
+    console.log("Current Directory: ", dir);
+    const entries = fs.readdirSync(dir, { withFileTypes: true });
+    entries.forEach((entry: Dirent) => {
+      const entryPath = path.join(dir, entry.name);
+
+      console.log("Processing Entry:", entryPath);
+
+      // Ignore entries inside .git
+      if (entryPath.includes(".git")) {
+        console.log("Ignoring Git Directory:", entryPath);
+        return;
+      }
+
+      // Check if the directory should be ignored
+      if (entry.isDirectory()) {
+        if (shouldIgnorePath(rootPath, entryPath, ig)) {
+          console.log("Ignoring Directory:", entryPath);
+          return; // Skip processing this directory
+        }
+        console.log("Entry is a Directory");
+        readDirRecursive(entryPath);
+      } else {
+        console.log("Entry is a File [%s]", entryPath);
+        console.log("Patterns being used:", patterns);
+
+        // Check if the file should be ignored
+        if (!shouldIgnorePath(rootPath, entryPath, ig)) {
+          console.log("File is not ignored, processing:", entryPath);
+          if (fs.existsSync(entryPath)) {
+            const relativePath = path.relative(rootPath, entryPath);
+            content += `./${relativePath}\n\`\`\`\n${fs.readFileSync(
+              entryPath,
+              "utf-8"
+            )}\n\`\`\`\n\n`;
+          }
+        } else {
+          console.log("Ignoring File:", entryPath);
+        }
+      }
+    });
+  }
+
+  readDirRecursive(rootPath);
+  writeToFile(repoName, content);
+}
+
+// Function to write content to a file
+function writeToFile(baseName: string, content: string) {
+  const outputDir = ensureOutputDirectoryExists();
+  const fileName = generateFileName(baseName);
+  const filePath = path.join(outputDir, fileName);
+  fs.writeFileSync(filePath, content, "utf-8");
+  vscode.window.showInformationMessage(`File saved at ${filePath}`);
+}
+
+// Function to convert the current file
+async function fileConverter() {
+  const activeEditor = vscode.window.activeTextEditor;
+  if (!activeEditor) {
+    vscode.window.showErrorMessage("No file opened.");
+    return;
+  }
+
+  const filePath = activeEditor.document.uri.fsPath;
+  const fileName = path.basename(filePath, path.extname(filePath));
+  const content = `./${fileName}\n\`\`\`\n${fs.readFileSync(
+    filePath,
+    "utf-8"
+  )}\n\`\`\`\n\n`;
+
+  writeToFile(fileName, content);
+}
+
+// Register commands in VS Code
+export function activate(context: vscode.ExtensionContext) {
+  context.subscriptions.push(
+    vscode.commands.registerCommand(
+      "dir-to-text-converter.repositoryConverter",
+      repositoryConverter
+    ),
+    vscode.commands.registerCommand(
+      "dir-to-text-converter.fileConverter",
+      fileConverter
+    )
+  );
+}
+
+export function deactivate() {}
+
+```
+
+./src/test/extension.test.ts
+```
+import * as assert from 'assert';
+
+// You can import and use all API from the 'vscode' module
+// as well as import your extension to test it
+import * as vscode from 'vscode';
+// import * as myExtension from '../../extension';
+
+suite('Extension Test Suite', () => {
+	vscode.window.showInformationMessage('Start all tests.');
+
+	test('Sample test', () => {
+		assert.strictEqual(-1, [1, 2, 3].indexOf(5));
+		assert.strictEqual(-1, [1, 2, 3].indexOf(0));
+	});
+});
+
+```
+
+./tsconfig.json
+```
+{
+  "compilerOptions": {
+    "module": "Node16",
+    "target": "ES2022",
+    "lib": ["ES2022"],
+    "outDir": "./out",
+    "rootDir": "src",
+    "types": ["node", "vscode", "mocha"], // Adicione "mocha" aqui
+    "sourceMap": true,
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "**/*.spec.ts"]
+}
+
+```
+
+./vsc-extension-quickstart.md
+```
+# Welcome to your VS Code Extension
+
+## What's in the folder
+
+* This folder contains all of the files necessary for your extension.
+* `package.json` - this is the manifest file in which you declare your extension and command.
+  * The sample plugin registers a command and defines its title and command name. With this information VS Code can show the command in the command palette. It doesn’t yet need to load the plugin.
+* `src/extension.ts` - this is the main file where you will provide the implementation of your command.
+  * The file exports one function, `activate`, which is called the very first time your extension is activated (in this case by executing the command). Inside the `activate` function we call `registerCommand`.
+  * We pass the function containing the implementation of the command as the second parameter to `registerCommand`.
+
+## Setup
+
+* install the recommended extensions (amodio.tsl-problem-matcher, ms-vscode.extension-test-runner, and dbaeumer.vscode-eslint)
+
+
+## Get up and running straight away
+
+* Press `F5` to open a new window with your extension loaded.
+* Run your command from the command palette by pressing (`Ctrl+Shift+P` or `Cmd+Shift+P` on Mac) and typing `Hello World`.
+* Set breakpoints in your code inside `src/extension.ts` to debug your extension.
+* Find output from your extension in the debug console.
+
+## Make changes
+
+* You can relaunch the extension from the debug toolbar after changing code in `src/extension.ts`.
+* You can also reload (`Ctrl+R` or `Cmd+R` on Mac) the VS Code window with your extension to load your changes.
+
+
+## Explore the API
+
+* You can open the full set of our API when you open the file `node_modules/@types/vscode/index.d.ts`.
+
+## Run tests
+
+* Install the [Extension Test Runner](https://marketplace.visualstudio.com/items?itemName=ms-vscode.extension-test-runner)
+* Run the "watch" task via the **Tasks: Run Task** command. Make sure this is running, or tests might not be discovered.
+* Open the Testing view from the activity bar and click the Run Test" button, or use the hotkey `Ctrl/Cmd + ; A`
+* See the output of the test result in the Test Results view.
+* Make changes to `src/test/extension.test.ts` or create new test files inside the `test` folder.
+  * The provided test runner will only consider files matching the name pattern `**.test.ts`.
+  * You can create folders inside the `test` folder to structure your tests any way you want.
+
+## Go further
+
+* Reduce the extension size and improve the startup time by [bundling your extension](https://code.visualstudio.com/api/working-with-extensions/bundling-extension).
+* [Publish your extension](https://code.visualstudio.com/api/working-with-extensions/publishing-extension) on the VS Code extension marketplace.
+* Automate builds by setting up [Continuous Integration](https://code.visualstudio.com/api/working-with-extensions/continuous-integration).
+
+```
+
+./webpack.config.js
+```
+//@ts-check
+
+'use strict';
+
+const path = require('path');
+
+//@ts-check
+/** @typedef {import('webpack').Configuration} WebpackConfig **/
+
+/** @type WebpackConfig */
+const extensionConfig = {
+  target: 'node', // VS Code extensions run in a Node.js-context 📖 -> https://webpack.js.org/configuration/node/
+	mode: 'none', // this leaves the source code as close as possible to the original (when packaging we set this to 'production')
+
+  entry: './src/extension.ts', // the entry point of this extension, 📖 -> https://webpack.js.org/configuration/entry-context/
+  output: {
+    // the bundle is stored in the 'dist' folder (check package.json), 📖 -> https://webpack.js.org/configuration/output/
+    path: path.resolve(__dirname, 'dist'),
+    filename: 'extension.js',
+    libraryTarget: 'commonjs2'
+  },
+  externals: {
+    vscode: 'commonjs vscode' // the vscode-module is created on-the-fly and must be excluded. Add other modules that cannot be webpack'ed, 📖 -> https://webpack.js.org/configuration/externals/
+    // modules added here also need to be added in the .vscodeignore file
+  },
+  resolve: {
+    // support reading TypeScript and JavaScript files, 📖 -> https://github.com/TypeStrong/ts-loader
+    extensions: ['.ts', '.js']
+  },
+  module: {
+    rules: [
+      {
+        test: /\.ts$/,
+        exclude: /node_modules/,
+        use: [
+          {
+            loader: 'ts-loader'
+          }
+        ]
+      }
+    ]
+  },
+  devtool: 'nosources-source-map',
+  infrastructureLogging: {
+    level: "log", // enables logging required for problem matchers
+  },
+};
+module.exports = [ extensionConfig ];
+```
+

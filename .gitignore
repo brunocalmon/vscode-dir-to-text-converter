@@ -1,7 +1,6 @@
 out
 dist
 node_modules
-repo-to-text-output/
 
 .vscode-test/
 .vscode/

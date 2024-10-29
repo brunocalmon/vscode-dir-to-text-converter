@@ -1,18 +1,33 @@
-Aqui está a versão atualizada do README para o seu plugin "Dir to Text Converter", com as informações sobre a nova funcionalidade de divisão de arquivos e estrutura de diretórios:
-
----
-
 # Dir to Text Converter
 
-This is a simple tool to transform an entire directory into a single text format, making it easier to use with AI generator models.
+A simple tool to convert directories, repositories, and individual files into a text or YAML format. This makes it easier to work with repository contents in AI-assisted applications or content analysis tools.
+
+## Usage Example for Generated Files
+
+A potential use case for the YAML format output is outlined below. You can send the YAML file to language models with prompts like this:
+
+```
+"Here is a YAML file representing the repository. If I request a change in a specific section, return only that complete section with the requested change. Do not return the entire file. Here is the current YAML:
+
+[YAML Content]
+
+Now, update the [SECTION NAME] section to include [DETAIL OF THE CHANGE]."
+```
+
+## Key Features
+
+- **Repository Conversion**: Converts an entire repository to a text file, with each path as a key and the file contents as the value.
+- **Directory Conversion**: Converts only the contents of the current directory.
+- **File Conversion**: Converts only the currently open file.
+- **Split File Conversion**: Splits a large file into smaller parts for easy processing, saving them within a structured output directory.
 
 ## Technologies Used
 
-- **Visual Studio Code API**: For integrating with the VS Code environment.
-- **TypeScript**: For writing type-safe code.
-- **Node.js**: For running the extension and its dependencies.
-- **Webpack**: For bundling the extension's code.
-- **Mermaid**: For generating diagrams to visualize the functionality.
+- **Visual Studio Code API**: For seamless integration within VS Code.
+- **TypeScript**: For type-safe, scalable code.
+- **Node.js**: For managing the extension runtime.
+- **Webpack**: For efficient bundling.
+- **Mermaid**: For generating diagrams to visualize plugin functionality.
 
 ## Functionality Diagram
 
@@ -22,8 +37,8 @@ flowchart TD
     B -->|Repository Converter| C[Traverse Entire Repository]
     B -->|Directory Converter| D[Traverse Current Directory]
     B -->|File Converter| E[Get Current File Content]
-    B -->|Split File Converter| F[Split the Current File]
-    C --> G[Generate Output File in repo-to-text-output]
+    B -->|Split File Converter| F[Split Current File]
+    C --> G[Generate Output in repo-to-text-output]
     D --> G
     E --> G
     F --> H[Save Parts in repo-to-text-splitted/<original-file-name>/]
@@ -33,110 +48,91 @@ flowchart TD
 
 ## Requirements
 
-Before you begin, ensure you have the following installed:
+Ensure you have the following installed:
 
-- **Node.js** (version 14.x or higher)
-- **npm** (comes with Node.js)
+- **Node.js** (14.x or higher)
+- **npm** (bundled with Node.js)
 - **Visual Studio Code**
-- **Yo (Yeoman)** for scaffolding the project
+- **Yeoman (Yo)** for project scaffolding
 
-You can install `Yo` globally using npm:
+Install `Yeoman` globally if needed:
 
 ```bash
 npm install -g yo
 ```
 
-## Generating the Base Content
+## Initial Setup and Installation
 
-To generate the base content for the extension, you can use the following commands:
+### Clone the Repository
 
-1. Open a terminal and run:
-   ```bash
-   yo code
-   ```
-2. Follow the prompts to set up your extension:
-   - Choose the type of extension you want to create (e.g., TypeScript).
-   - Provide a name, description, and other settings as prompted.
-3. This will create the basic structure of the extension in a new directory.
+```bash
+git clone https://github.com/username/dir-to-text-converter.git
+cd dir-to-text-converter
+```
 
-## Manual Installation and Usage
+### Install Dependencies
 
-### Cloning the Repository
+```bash
+npm install
+```
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/username/dir-to-text-converter.git
-   cd dir-to-text-converter
-   ```
+### Open the Project in Visual Studio Code
 
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
+```bash
+code .
+```
 
-3. Open the project in Visual Studio Code:
-   ```bash
-   code .
-   ```
+## Running the Extension Locally
 
-### Running the Extension Locally Without Packaging
+1. Press `F5` to launch the extension in a new VS Code window.
+2. Open the Command Palette (`Ctrl + Shift + P`).
+3. Choose from these commands:
+   - **repository-converter**: Convert the whole repository.
+   - **dir-converter**: Convert only the current directory.
+   - **file-converter**: Convert only the current file.
+   - **split-file**: Split the current file into smaller parts for easy processing.
 
-1. Press `F5` to run the extension in a new VS Code window.
-2. Open the Command Palette (Ctrl + Shift + P).
-3. Type and select one of the following commands:
-   - **repository-converter**: Converts the entire repository into a text file.
-   - **dir-converter**: Converts only the current directory into a text file.
-   - **file-converter**: Converts only the currently opened file into a text file.
-   - **split-file**: Splits the currently opened file into smaller parts and saves them in a structured folder.
+## Packaging the Extension for Publishing
 
-### Packaging the Extension Locally
+To create a `.vsix` file for distribution:
 
-To package the extension for publishing:
+```bash
+vsce package
+```
 
-1. Run the following command in the terminal:
-   ```bash
-   vsce package
-   ```
+### Install the Packaged Extension
 
-This will create a `.vsix` file in the root directory.
+1. In VS Code, navigate to Extensions (`Ctrl + Shift + X`).
+2. Click the three dots in the top-right, select **Install from VSIX...**, and choose your `.vsix` file.
 
-### Installing the Packaged Extension
+## Post-Installation Usage
 
-1. Open Visual Studio Code.
-2. Go to the Extensions section (Ctrl + Shift + X).
-3. Click on the three dots in the top-right corner and select "Install from VSIX..."
-4. Choose the `.vsix` file created in the previous step.
-
-## Using the Extension After Installation
-
-1. After installing, open the Command Palette (Ctrl + Shift + P).
-2. Type and select one of the following commands:
-   - **repository-converter**: Converts the entire repository into a text file.
-   - **dir-converter**: Converts only the current directory into a text file.
-   - **file-converter**: Converts only the currently opened file into a text file.
-   - **split-file**: Splits the currently opened file into smaller parts.
-3. The output will be saved in:
-   - A file named `<name>-<timestamp>.txt` inside the `repo-to-text-output` directory for standard conversions.
-   - A structured directory `repo-to-text-splitted/<original-file-name>/` for split files.
+1. Open the Command Palette (`Ctrl + Shift + P`).
+2. Choose a command:
+   - **repository-converter**
+   - **dir-converter**
+   - **file-converter**
+   - **split-file**
+3. The output is saved in:
+   - `repo-to-text-output` for standard conversions.
+   - `repo-to-text-splitted/<original-file-name>/` for split files.
 
 ## Publishing the Extension
 
-To publish the extension, ensure you have a Visual Studio Marketplace account and run:
+To publish to the Visual Studio Marketplace:
 
 ```bash
 vsce publish
 ```
 
-You may need to log in to your Azure DevOps account if prompted.
+You may be prompted to log in to your Azure DevOps account.
 
-## Contribution
+## Contributing
 
-Feel free to contribute improvements. Open a pull request or an issue to discuss changes.
+Contributions are welcome! Open a pull request or issue to suggest improvements or report bugs.
 
 ## License
 
-This project is licensed under the terms specified in the [LICENSE](LICENSE) file.
+This project is licensed under the [LICENSE](LICENSE) file.
 
----
-
-Sinta-se à vontade para ajustar qualquer parte do README conforme necessário! Se precisar de mais alguma coisa, estou à disposição.
+--- 

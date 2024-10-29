@@ -1,71 +1,128 @@
-# dir-to-text-converter README
+# Dir to Text Converter
 
-This is the README for your extension "dir-to-text-converter". After writing up a brief description, we recommend including the following sections.
+This is a simple tool to transform an entire directory into a single text format, making it easier to use with AI generator models.
 
-## Features
+## Technologies Used
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+- **Visual Studio Code API**: For integrating with the VS Code environment.
+- **TypeScript**: For writing type-safe code.
+- **Node.js**: For running the extension and its dependencies.
+- **Webpack**: For bundling the extension's code.
+- **Mermaid**: For generating diagrams to visualize the functionality.
 
-For example if there is an image subfolder under your extension project workspace:
+## Functionality Diagram
 
-\!\[feature X\]\(images/feature-x.png\)
-
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+```mermaid
+flowchart TD
+    A[Start] --> B{Choose Conversion Mode}
+    B -->|Repository Converter| C[Traverse Entire Repository]
+    B -->|Directory Converter| D[Traverse Current Directory]
+    B -->|File Converter| E[Get Current File Content]
+    C --> F[Generate Output File in repo-to-text-output]
+    D --> F
+    E --> F
+    F --> G[Show Success Message]
+    G --> H[End]
+```
 
 ## Requirements
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+Before you begin, ensure you have the following installed:
 
-## Extension Settings
+- **Node.js** (version 14.x or higher)
+- **npm** (comes with Node.js)
+- **Visual Studio Code**
+- **Yo (Yeoman)** for scaffolding the project
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+You can install `Yo` globally using npm:
 
-For example:
+```bash
+npm install -g yo
+```
 
-This extension contributes the following settings:
+## Generating the Base Content
 
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
+To generate the base content for the extension, you can use the following commands:
 
-## Known Issues
+1. Open a terminal and run:
+   ```bash
+   yo code
+   ```
+2. Follow the prompts to set up your extension:
+   - Choose the type of extension you want to create (e.g., TypeScript).
+   - Provide a name, description, and other settings as prompted.
+3. This will create the basic structure of the extension in a new directory.
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+## Manual Installation and Usage
 
-## Release Notes
+### Cloning the Repository
 
-Users appreciate release notes as you update your extension.
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/username/dir-to-text-converter.git
+   cd dir-to-text-converter
+   ```
 
-### 1.0.0
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-Initial release of ...
+3. Open the project in Visual Studio Code:
+   ```bash
+   code .
+   ```
 
-### 1.0.1
+### Running the Extension Locally Without Packaging
 
-Fixed issue #.
+1. Press `F5` to run the extension in a new VS Code window.
+2. Open the Command Palette (Ctrl + Shift + P).
+3. Type and select one of the following commands:
+   - **repository-converter**: Converts the entire repository into a text file.
+   - **dir-converter**: Converts only the current directory into a text file.
+   - **file-converter**: Converts only the currently opened file into a text file.
 
-### 1.1.0
+### Packaging the Extension Locally
 
-Added features X, Y, and Z.
+To package the extension for publishing:
 
----
+1. Run the following command in the terminal:
+   ```bash
+   vsce package
+   ```
 
-## Following extension guidelines
+This will create a `.vsix` file in the root directory.
 
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
+### Installing the Packaged Extension
 
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
+1. Open Visual Studio Code.
+2. Go to the Extensions section (Ctrl + Shift + X).
+3. Click on the three dots in the top-right corner and select "Install from VSIX..."
+4. Choose the `.vsix` file created in the previous step.
 
-## Working with Markdown
+## Using the Extension After Installation
 
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
+1. After installing, open the Command Palette (Ctrl + Shift + P).
+2. Type and select one of the following commands:
+   - **repository-converter**: Converts the entire repository into a text file.
+   - **dir-converter**: Converts only the current directory into a text file.
+   - **file-converter**: Converts only the currently opened file into a text file.
+3. The output will be saved in a file named `<name>-<timestamp>.txt` inside the `repo-to-text-output` directory.
 
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
+## Publishing the Extension
 
-## For more information
+To publish the extension, ensure you have a Visual Studio Marketplace account and run:
 
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
+```bash
+vsce publish
+```
 
-**Enjoy!**
+You may need to log in to your Azure DevOps account if prompted.
+
+## Contribution
+
+Feel free to contribute improvements. Open a pull request or an issue to discuss changes.
+
+## License
+
+This project is licensed under the terms specified in the [LICENSE](LICENSE) file.

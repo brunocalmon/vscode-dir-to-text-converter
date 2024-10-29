@@ -28,6 +28,10 @@
       {
         "command": "dir-to-text-converter.unminifyFile",
         "title": "Dir-To-Text: Unminify File Content"
+      },
+      {
+        "command": "dir-to-text-converter.splitFile",
+        "title": "Dir-To-Text: Split File Content"
       }
     ]
   },

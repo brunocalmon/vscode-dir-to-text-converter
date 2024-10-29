@@ -1,6 +1,7 @@
 import * as vscode from "vscode";
 import repositoryConverter from "./commands/repositoryConverter";
 import fileConverter from "./commands/fileConverter";
+import splitFile from './commands/splitFile';
 
 const minifyFile = require("./commands/minifyFile");
 const unminifyFile = require("./commands/unminifyFile");
@@ -23,6 +24,10 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.commands.registerCommand(
       "dir-to-text-converter.unminifyFile",
       unminifyFile
+    ),
+    vscode.commands.registerCommand(
+      "dir-to-text-converter.splitFile",
+      splitFile 
     )
   );
 }

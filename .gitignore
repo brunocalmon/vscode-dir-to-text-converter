@@ -1,6 +1,9 @@
 out
 dist
 node_modules
+repo-to-text-output/
+repo-to-text-mini-output/
+repo-to-text-recovered-output/
 
 .vscode-test/
 .vscode/

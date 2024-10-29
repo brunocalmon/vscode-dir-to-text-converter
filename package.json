@@ -1,5 +1,6 @@
 {
   "name": "dir-to-text-converter",
+  "publisher": "BrunoCalmon",
   "displayName": "dir-to-text-converter",
   "description": "This is a simple tool to transform the complete directory into a single te text format, to make ease to use with AI generator models",
   "version": "0.0.1",

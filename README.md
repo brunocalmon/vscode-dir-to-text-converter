@@ -1,3 +1,7 @@
+Aqui está a versão atualizada do README para o seu plugin "Dir to Text Converter", com as informações sobre a nova funcionalidade de divisão de arquivos e estrutura de diretórios:
+
+---
+
 # Dir to Text Converter
 
 This is a simple tool to transform an entire directory into a single text format, making it easier to use with AI generator models.
@@ -18,11 +22,13 @@ flowchart TD
     B -->|Repository Converter| C[Traverse Entire Repository]
     B -->|Directory Converter| D[Traverse Current Directory]
     B -->|File Converter| E[Get Current File Content]
-    C --> F[Generate Output File in repo-to-text-output]
-    D --> F
-    E --> F
-    F --> G[Show Success Message]
-    G --> H[End]
+    B -->|Split File Converter| F[Split the Current File]
+    C --> G[Generate Output File in repo-to-text-output]
+    D --> G
+    E --> G
+    F --> H[Save Parts in repo-to-text-splitted/<original-file-name>/]
+    G --> I[Show Success Message]
+    I --> J[End]
 ```
 
 ## Requirements
@@ -81,6 +87,7 @@ To generate the base content for the extension, you can use the following comman
    - **repository-converter**: Converts the entire repository into a text file.
    - **dir-converter**: Converts only the current directory into a text file.
    - **file-converter**: Converts only the currently opened file into a text file.
+   - **split-file**: Splits the currently opened file into smaller parts and saves them in a structured folder.
 
 ### Packaging the Extension Locally
 
@@ -107,7 +114,10 @@ This will create a `.vsix` file in the root directory.
    - **repository-converter**: Converts the entire repository into a text file.
    - **dir-converter**: Converts only the current directory into a text file.
    - **file-converter**: Converts only the currently opened file into a text file.
-3. The output will be saved in a file named `<name>-<timestamp>.txt` inside the `repo-to-text-output` directory.
+   - **split-file**: Splits the currently opened file into smaller parts.
+3. The output will be saved in:
+   - A file named `<name>-<timestamp>.txt` inside the `repo-to-text-output` directory for standard conversions.
+   - A structured directory `repo-to-text-splitted/<original-file-name>/` for split files.
 
 ## Publishing the Extension
 
@@ -126,3 +136,7 @@ Feel free to contribute improvements. Open a pull request or an issue to discuss
 ## License
 
 This project is licensed under the terms specified in the [LICENSE](LICENSE) file.
+
+---
+
+Sinta-se à vontade para ajustar qualquer parte do README conforme necessário! Se precisar de mais alguma coisa, estou à disposição.

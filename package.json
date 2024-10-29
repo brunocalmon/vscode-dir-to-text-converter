@@ -20,6 +20,14 @@
       {
         "command": "dir-to-text-converter.fileConverter",
         "title": "Dir-To-Text: File Converter"
+      },
+      {
+        "command": "dir-to-text-converter.minifyFile",
+        "title": "Dir-To-Text: Minify File Content"
+      },
+      {
+        "command": "dir-to-text-converter.unminifyFile",
+        "title": "Dir-To-Text: Unminify File Content"
       }
     ]
   },
@@ -54,7 +62,25 @@
     "webpack-cli": "^5.1.4"
   },
   "dependencies": {
+    "clean-css": "^5.3.3",
+    "html-minifier-terser": "^7.2.0",
     "ignore": "^6.0.2",
-    "js-yaml": "^4.1.0"
-  }
+    "js-beautify": "^1.15.1",
+    "js-yaml": "^4.1.0",
+    "terser": "^5.36.0"
+  },
+  "keywords": [
+    "directory",
+    "yaml",
+    "minify",
+    "unminify",
+    "vscode-extension",
+    "code-compression"
+  ],
+  "author": "Bruno Calmon",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/your-username/dir-to-text-converter/issues"
+  },
+  "homepage": "https://github.com/your-username/dir-to-text-converter#readme"
 }

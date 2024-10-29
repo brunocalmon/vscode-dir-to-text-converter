@@ -5,6 +5,9 @@ import * as fs from "fs";
 import ignore from "ignore";
 import yaml from "js-yaml"; // Importando a biblioteca js-yaml
 
+const minifyFile = require("./commands/minifyFile");
+const unminifyFile = require("./commands/unminifyFile");
+
 // Função para gerar um nome de arquivo
 function generateFileName(baseName: string): string {
   const timestamp = new Date().toISOString().replace(/[:.-]/g, ""); // Remove caracteres problemáticos para sistemas de arquivos
@@ -61,7 +64,7 @@ function shouldIgnorePath(
   // Verifica se rootPath é um diretório
   if (!fs.existsSync(rootPath) || !fs.lstatSync(rootPath).isDirectory()) {
     console.error("Invalid rootPath. It must be a valid directory.");
-    return false; 
+    return false;
   }
 
   // Verifica se o caminho relativo é válido antes de verificar os padrões de ignore
@@ -70,7 +73,7 @@ function shouldIgnorePath(
 
   if (!relativePath || relativePath.startsWith("..")) {
     console.warn("Invalid relative path, ignoring the check:", relativePath);
-    return false; 
+    return false;
   }
 
   console.log("ShouldIgnore: %s", ig.ignores(relativePath));
@@ -134,7 +137,7 @@ async function repositoryConverter() {
   }
 
   readDirRecursive(rootPath);
-  
+
   // Escreve o conteúdo em um arquivo YAML
   const yamlContent = yaml.dump(content);
   writeToFile("repo-content", yamlContent);
@@ -163,7 +166,7 @@ async function fileConverter() {
 
   // Preparar o conteúdo em formato YAML
   const yamlContent = {
-    [fileName]: fileContent // O nome do arquivo como chave e seu conteúdo como valor
+    [fileName]: fileContent, // O nome do arquivo como chave e seu conteúdo como valor
   };
 
   writeToFile(fileName, yaml.dump(yamlContent)); // Usando js-yaml para converter para YAML
@@ -179,8 +182,21 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.commands.registerCommand(
       "dir-to-text-converter.fileConverter",
       fileConverter
+    ),
+    vscode.commands.registerCommand(
+      "dir-to-text-converter.minifyFile",
+      minifyFile
+    ),
+    vscode.commands.registerCommand(
+      "dir-to-text-converter.unminifyFile",
+      unminifyFile
     )
   );
 }
 
 export function deactivate() {}
+
+module.exports = {
+  activate,
+  deactivate,
+};

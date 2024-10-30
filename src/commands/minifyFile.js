@@ -27,10 +27,15 @@ async function minifyFile() {
     }
 
     const rootPath = workspaceFolders[0].uri.fsPath;
-    const expectedInputDir = path.join(rootPath, "repo-to-text-output");
+    const expectedInputDir = path.join(rootPath, "dir-to-text", "repo-to-text-output");
 
-    if (!filePath.startsWith(expectedInputDir) || path.extname(filePath) !== ".dttc") {
-      console.error(`File is not in the expected directory or is not a DTTC file: ${filePath}`);
+    if (
+      !filePath.startsWith(expectedInputDir) ||
+      path.extname(filePath) !== ".dttc"
+    ) {
+      console.error(
+        `File is not in the expected directory or is not a DTTC file: ${filePath}`
+      );
       return;
     }
 
@@ -43,7 +48,8 @@ async function minifyFile() {
       if (minifyStrategies[ext]) {
         try {
           const result = minifyStrategies[ext](value);
-          minifiedContent[key] = result instanceof Promise ? await result : result;
+          minifiedContent[key] =
+            result instanceof Promise ? await result : result;
         } catch (err) {
           console.warn(`Error minifying content of ${key}:`, err.message);
           minifiedContent[key] = value;
@@ -53,12 +59,19 @@ async function minifyFile() {
       }
     }
 
-    const outputDir = path.join(path.dirname(filePath), "..", "repo-to-text-mini-output");
+    const outputDir = path.join(
+      path.dirname(filePath),
+      "..",
+      "repo-to-text-mini-output"
+    );
     if (!fs.existsSync(outputDir)) {
-      fs.mkdirSync(outputDir);
+      fs.mkdirSync(outputDir, { recursive: true });
     }
 
-    const outputFilePath = path.join(outputDir, `minified-${path.basename(filePath, ".yaml")}.dttc`);
+    const outputFilePath = path.join(
+      outputDir,
+      `minified-${path.basename(filePath, ".yaml")}.dttc`
+    );
     fs.writeFileSync(outputFilePath, yaml.dump(minifiedContent), "utf8");
   } catch (err) {
     console.error(`Error processing DTTC file:`, err.message);

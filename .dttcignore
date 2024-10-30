@@ -1,29 +1,29 @@
 out
 dist
 node_modules
+dir-to-text/
 repo-to-text-output/
 repo-to-text-mini-output/
 repo-to-text-recovered-output/
-
-package-lock.json
+src/test/
 
 .vscode-test/
 .vscode/
+.git/
+
+package-lock.json
+tsconfig.json
 
 *.vsix
+*.mjs
 
-.vscode/
-.vscode-test.mjs
 .vscodeignore
+.gitignore
+.dttcignore
+
 LICENSE
-eslint.config.mjs
 CHANGELOG.md
-tsconfig.json
-vsc-extension-quickstart.md
-webpack.config.js
-test
 README.md
+vsc-extension-quickstart.md
 
-src/test
-
-.git/
+webpack.config.js

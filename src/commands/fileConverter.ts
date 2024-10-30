@@ -30,9 +30,17 @@ function writeToFile(baseName: string, content: string) {
 }
 
 function ensureOutputDirectoryExists(outputDirName: string): string {
-  const outputDir = path.join(vscode.workspace.rootPath || "", outputDirName);
+  const workspaceFolders = vscode.workspace.workspaceFolders;
+  if (!workspaceFolders) {
+    vscode.window.showErrorMessage("No directory opened.");
+    throw new Error("No directory opened.");
+  }
+
+  const rootPath = workspaceFolders[0].uri.fsPath;
+
+  const outputDir = path.join(rootPath || "", "dir-to-text", outputDirName);
   if (!fs.existsSync(outputDir)) {
-    fs.mkdirSync(outputDir);
+    fs.mkdirSync(outputDir, { recursive: true }); // Ensures that all parent directories are created
   }
   return outputDir;
 }

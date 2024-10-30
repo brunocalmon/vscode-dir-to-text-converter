@@ -2,11 +2,17 @@ import * as fs from "fs";
 import * as path from "path";
 import * as vscode from "vscode";
 
-const INSTRUCTION = "This file contains a part of the divided text. Please read it carefully. After reading, you must wait for the next file.";
-const FINAL_INSTRUCTION = "This is the last file. Please provide your final words.";
+const INSTRUCTION =
+  "This file contains a part of the divided text. Please read it carefully. After reading, you must wait for the next file.";
+const FINAL_INSTRUCTION =
+  "This is the last file. Please provide your final words.";
 
 function isValidDirectory(dir: string): boolean {
-  const validDirs = ["repo-to-text-output", "repo-to-text-mini-output", "repo-to-text-recovered-output"];
+  const validDirs = [
+    "repo-to-text-output",
+    "repo-to-text-mini-output",
+    "repo-to-text-recovered-output",
+  ];
   return validDirs.some((validDir) => dir.includes(validDir));
 }
 
@@ -23,7 +29,9 @@ async function splitFile() {
   const inputDir = path.dirname(inputFilePath);
 
   if (!isValidDirectory(inputDir)) {
-    console.error(`Invalid file. The file must be in one of the folders: repo-to-text-output, repo-to-text-mini-output, repo-to-text-recovered-output.`);
+    console.error(
+      `Invalid file. The file must be in one of the folders: repo-to-text-output, repo-to-text-mini-output, repo-to-text-recovered-output.`
+    );
     return;
   }
 
@@ -34,8 +42,11 @@ async function splitFile() {
   }
 
   const rootPath = workspaceFolders[0].uri.fsPath;
-  const outputDir = path.join(rootPath, "repo-to-text-splitted");
-  const subDir = path.join(outputDir, path.basename(inputFilePath, path.extname(inputFilePath)));
+  const outputDir = path.join(rootPath, "dir-to-text", "repo-to-text-splitted");
+  const subDir = path.join(
+    outputDir,
+    path.basename(inputFilePath, path.extname(inputFilePath))
+  );
   const chunkSize = 1000;
 
   const fileContent = fs.readFileSync(inputFilePath, "utf-8");

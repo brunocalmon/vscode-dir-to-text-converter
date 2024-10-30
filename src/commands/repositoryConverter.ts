@@ -13,9 +13,21 @@ function generateFileName(baseName: string): string {
 
 // Function to ensure the output directory exists
 function ensureOutputDirectoryExists(): string {
-  const outputDir = path.join(vscode.workspace.rootPath || "", "repo-to-text-output");
+  const workspaceFolders = vscode.workspace.workspaceFolders;
+  if (!workspaceFolders) {
+    vscode.window.showErrorMessage("No directory opened.");
+    throw new Error("No directory opened.");
+  }
+
+  const rootPath = workspaceFolders[0].uri.fsPath;
+
+  const outputDir = path.join(
+    rootPath || "",
+    "dir-to-text",
+    "repo-to-text-output"
+  );
   if (!fs.existsSync(outputDir)) {
-    fs.mkdirSync(outputDir);
+    fs.mkdirSync(outputDir, { recursive: true }); // Ensures that all parent directories are created
   }
   return outputDir;
 }
@@ -84,7 +96,9 @@ async function repositoryConverter() {
       const entryPath = path.join(dir, entry.name);
 
       if (entry.isDirectory()) {
-        if (shouldIgnorePath(rootPath, entryPath, ig)) return;
+        if (shouldIgnorePath(rootPath, entryPath, ig)) {
+          return;
+        }
         readDirRecursive(entryPath);
       } else {
         if (!shouldIgnorePath(rootPath, entryPath, ig)) {

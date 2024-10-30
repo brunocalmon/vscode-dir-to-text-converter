@@ -27,7 +27,7 @@ async function unminifyFile() {
     }
 
     const rootPath = workspaceFolders[0].uri.fsPath;
-    const expectedInputDir = path.join(rootPath, 'repo-to-text-mini-output');
+    const expectedInputDir = path.join(rootPath, 'dir-to-text', 'repo-to-text-mini-output');
 
     if (!filePath.startsWith(expectedInputDir) || path.extname(filePath) !== '.dttc') {
       console.error(`File is not in the expected directory or is not a DTTC file: ${filePath}`);
@@ -59,7 +59,7 @@ async function unminifyFile() {
       }
     }
 
-    const outputDir = path.join(rootPath, 'repo-to-text-recovered-output');
+    const outputDir = path.join(rootPath, 'dir-to-text', 'repo-to-text-recovered-output');
     if (!fs.existsSync(outputDir)) {
       console.log(`Creating output directory: ${outputDir}`);
       fs.mkdirSync(outputDir);

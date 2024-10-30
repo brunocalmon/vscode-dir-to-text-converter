@@ -3,7 +3,7 @@
   "publisher": "BrunoCalmon",
   "displayName": "dir-to-text-converter",
   "description": "This is a simple tool to transform the complete directory into a single te text format, to make ease to use with AI generator models",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "engines": {
     "vscode": "^1.94.0"
   },
@@ -33,6 +33,9 @@
       {
         "command": "dir-to-text-converter.splitFile",
         "title": "Dir-To-Text: Split File Content"
+      },{
+        "command": "dir-to-text-converter.readDttc",
+        "title": "Dir-To-Text: Read Dttc File Content"
       }
     ]
   },

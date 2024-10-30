@@ -36,6 +36,7 @@ Now, update the [SECTION NAME] section to include [DETAIL OF THE CHANGE]."
 - **Directory Conversion**: Converts only the contents of the current directory.
 - **File Conversion**: Converts only the currently open file.
 - **Split File Conversion**: Splits a large file into smaller parts for easy processing, saving them within a structured output directory.
+- **Read DTT Command**: Reads a `.dttc` file, verifies its validity, and updates the corresponding files in the repository based on the key-value pairs defined in the `.dttc` file.
 - **.dttcignore**: A .gitignore-like to skip undesired files or folders.
 
 ## Technologies Used
@@ -108,6 +109,7 @@ code .
    - **dir-converter**: Convert only the current directory.
    - **file-converter**: Convert only the current file.
    - **split-file**: Split the current file into smaller parts for easy processing.
+   - **read-dttc**: Read a `.dttc` file and update the corresponding files in the repository.
 
 ## Packaging the Extension for Publishing
 
@@ -130,6 +132,7 @@ vsce package
    - **dir-converter**
    - **file-converter**
    - **split-file**
+   - **read-dttc**
 3. The output is saved in:
    - `repo-to-text-output` for standard conversions.
    - `repo-to-text-splitted/<original-file-name>/` for split files.
@@ -151,5 +154,3 @@ Contributions are welcome! Open a pull request or issue to suggest improvements 
 ## License
 
 This project is licensed under the [LICENSE](LICENSE) file.
-
---- 

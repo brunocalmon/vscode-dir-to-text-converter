@@ -1,15 +1,31 @@
 # Dir to Text Converter
 
-A simple tool to convert directories, repositories, and individual files into a text or YAML format. This makes it easier to work with repository contents in AI-assisted applications or content analysis tools.
+A simple tool to convert directories, repositories, and individual files into a text or DTTC format. This makes it easier to work with repository contents in AI-assisted applications or content analysis tools.
 
 ## Usage Example for Generated Files
 
-A potential use case for the YAML format output is outlined below. You can send the YAML file to language models with prompts like this:
+A potential use case for the DTTC format output is outlined below. You can send the DTTC file to language models with prompts like this:
 
 ```
-"Here is a YAML file representing the repository. If I request a change in a specific section, return only that complete section with the requested change. Do not return the entire file. Here is the current YAML:
+"Here is a DTTC file representing the repository files in the template below: 
 
-[YAML Content]
+   
+   --------------------
+   |filePath >-       |
+   |   content        |
+   |filePath_2 >      |
+   |   content        |
+   |filePath_3 |-     |
+   |   content        |
+   |filePath_4 |      |
+   |   content        |
+   --------------------
+
+If I request a change in a specific section, return only that complete section with the requested change. Do not return the entire file. Here is the current DTTC:
+
+[DTTC Content]
+Content
+[/DTTC Content]
 
 Now, update the [SECTION NAME] section to include [DETAIL OF THE CHANGE]."
 ```
@@ -20,6 +36,7 @@ Now, update the [SECTION NAME] section to include [DETAIL OF THE CHANGE]."
 - **Directory Conversion**: Converts only the contents of the current directory.
 - **File Conversion**: Converts only the currently open file.
 - **Split File Conversion**: Splits a large file into smaller parts for easy processing, saving them within a structured output directory.
+- **.dttcignore**: A .gitignore-like to skip undesired files or folders.
 
 ## Technologies Used
 

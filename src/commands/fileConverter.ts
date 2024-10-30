@@ -1,9 +1,8 @@
 import * as vscode from "vscode";
 import * as fs from "fs";
 import * as path from "path";
-import yaml from "js-yaml"; // Importando a biblioteca js-yaml
+import yaml from "js-yaml";
 
-// Função para converter o arquivo atual
 async function fileConverter() {
   const activeEditor = vscode.window.activeTextEditor;
   if (!activeEditor) {
@@ -15,15 +14,13 @@ async function fileConverter() {
   const fileName = path.basename(filePath, path.extname(filePath));
   const fileContent = fs.readFileSync(filePath, "utf-8");
 
-  // Preparar o conteúdo em formato YAML
   const yamlContent = {
-    [fileName]: fileContent, // O nome do arquivo como chave e seu conteúdo como valor
+    [fileName]: fileContent,
   };
 
-  writeToFile(fileName, yaml.dump(yamlContent)); // Usando js-yaml para converter para YAML
+  writeToFile(fileName, yaml.dump(yamlContent));
 }
 
-// Função para escrever conteúdo em um arquivo
 function writeToFile(baseName: string, content: string) {
   const outputDir = ensureOutputDirectoryExists("repo-to-text-output");
   const fileName = generateFileName(baseName);
@@ -32,7 +29,6 @@ function writeToFile(baseName: string, content: string) {
   vscode.window.showInformationMessage(`File saved at ${filePath}`);
 }
 
-// Função para garantir que o diretório de saída exista
 function ensureOutputDirectoryExists(outputDirName: string): string {
   const outputDir = path.join(vscode.workspace.rootPath || "", outputDirName);
   if (!fs.existsSync(outputDir)) {
@@ -41,10 +37,9 @@ function ensureOutputDirectoryExists(outputDirName: string): string {
   return outputDir;
 }
 
-// Função para gerar um nome de arquivo
 function generateFileName(baseName: string): string {
-  const timestamp = new Date().toISOString().replace(/[:.-]/g, ""); // Remove caracteres problemáticos para sistemas de arquivos
-  return `${baseName}-${timestamp}.yaml`; // Alterado para salvar em YAML
+  const timestamp = new Date().toISOString().replace(/[:.-]/g, "");
+  return `${baseName}-${timestamp}.dttc`;
 }
 
 export default fileConverter;

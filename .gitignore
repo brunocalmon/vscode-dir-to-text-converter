@@ -5,6 +5,8 @@ repo-to-text-output/
 repo-to-text-mini-output/
 repo-to-text-recovered-output/
 
+package-lock.json
+
 .vscode-test/
 .vscode/
 

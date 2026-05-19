@@ -3,9 +3,8 @@ import repositoryConverter from "./commands/repositoryConverter";
 import fileConverter from "./commands/fileConverter";
 import splitFile from './commands/splitFile';
 import { readDttcCommand } from './commands/readDttcCommand';
-
-const minifyFile = require("./commands/minifyFile");
-const unminifyFile = require("./commands/unminifyFile");
+import minifyFile from "./commands/minifyFile";
+import unminifyFile from "./commands/unminifyFile";
 
 // Registro de comandos no VS Code
 export function activate(context: vscode.ExtensionContext) {

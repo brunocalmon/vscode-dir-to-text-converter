@@ -1,10 +1,10 @@
-const fs = require("fs");
-const yaml = require("js-yaml");
-const path = require("path");
-const vscode = require("vscode");
-const minifyStrategies = require("../utils/minifyStrategies");
+import * as fs from "fs";
+import yaml from "js-yaml";
+import * as path from "path";
+import * as vscode from "vscode";
+import minifyStrategies from "../utils/minifyStrategies";
 
-async function minifyFile() {
+async function minifyFile(): Promise<void> {
   const activeEditor = vscode.window.activeTextEditor;
   if (!activeEditor) {
     vscode.window.showErrorMessage("No file opened.");
@@ -33,15 +33,15 @@ async function minifyFile() {
       !filePath.startsWith(expectedInputDir) ||
       path.extname(filePath) !== ".dttc"
     ) {
-      console.error(
+      vscode.window.showErrorMessage(
         `File is not in the expected directory or is not a DTTC file: ${filePath}`
       );
       return;
     }
 
-    const content = yaml.load(fs.readFileSync(filePath, "utf8"));
+    const content = yaml.load(fs.readFileSync(filePath, "utf8")) as Record<string, string>;
 
-    const minifiedContent = {};
+    const minifiedContent: Record<string, string> = {};
 
     for (const [key, value] of Object.entries(content)) {
       const ext = path.extname(key).substring(1);
@@ -51,7 +51,7 @@ async function minifyFile() {
           minifiedContent[key] =
             result instanceof Promise ? await result : result;
         } catch (err) {
-          console.warn(`Error minifying content of ${key}:`, err.message);
+          console.warn(`Error minifying content of ${key}:`, (err as Error).message);
           minifiedContent[key] = value;
         }
       } else {
@@ -68,14 +68,16 @@ async function minifyFile() {
       fs.mkdirSync(outputDir, { recursive: true });
     }
 
+    // Fixed: changed .yaml to .dttc in path.basename to avoid minified-filename.dttc.dttc double extension bug
     const outputFilePath = path.join(
       outputDir,
-      `minified-${path.basename(filePath, ".yaml")}.dttc`
+      `minified-${path.basename(filePath, ".dttc")}.dttc`
     );
     fs.writeFileSync(outputFilePath, yaml.dump(minifiedContent), "utf8");
+    vscode.window.showInformationMessage(`Minified file saved at ${outputFilePath}`);
   } catch (err) {
-    console.error(`Error processing DTTC file:`, err.message);
+    vscode.window.showErrorMessage(`Error processing DTTC file: ${(err as Error).message}`);
   }
 }
 
-module.exports = minifyFile;
+export default minifyFile;

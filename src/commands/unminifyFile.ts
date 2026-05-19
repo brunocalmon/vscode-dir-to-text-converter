@@ -1,10 +1,10 @@
-const fs = require('fs');
-const yaml = require('js-yaml');
-const path = require('path');
-const vscode = require('vscode');
-const unminifyStrategies = require('../utils/unminifyStrategies');
+import * as fs from 'fs';
+import yaml from 'js-yaml';
+import * as path from 'path';
+import * as vscode from 'vscode';
+import unminifyStrategies from '../utils/unminifyStrategies';
 
-async function unminifyFile() {
+async function unminifyFile(): Promise<void> {
   const activeEditor = vscode.window.activeTextEditor;
   if (!activeEditor) {
     vscode.window.showErrorMessage("No file opened.");
@@ -21,8 +21,8 @@ async function unminifyFile() {
 
   try {
     const workspaceFolders = vscode.workspace.workspaceFolders;
-    if (!workspaceFolders) {
-      console.error("No workspace folder found.");
+    if (!workspaceFolders || workspaceFolders.length === 0) {
+      vscode.window.showErrorMessage("No workspace folder opened.");
       return;
     }
 
@@ -30,15 +30,15 @@ async function unminifyFile() {
     const expectedInputDir = path.join(rootPath, 'dir-to-text', 'repo-to-text-mini-output');
 
     if (!filePath.startsWith(expectedInputDir) || path.extname(filePath) !== '.dttc') {
-      console.error(`File is not in the expected directory or is not a DTTC file: ${filePath}`);
+      vscode.window.showErrorMessage(`File is not in the expected directory or is not a DTTC file: ${filePath}`);
       return;
     }
 
     console.log(`Loading DTTC file content: ${filePath}`);
-    const content = yaml.load(fs.readFileSync(filePath, 'utf8'));
+    const content = yaml.load(fs.readFileSync(filePath, 'utf8')) as Record<string, string>;
     console.log(`Content loaded successfully:`, content);
 
-    const unminifiedContent = {};
+    const unminifiedContent: Record<string, string> = {};
 
     for (const [key, value] of Object.entries(content)) {
       console.log(`Processing key: ${key}`);
@@ -50,7 +50,7 @@ async function unminifyFile() {
           unminifiedContent[key] = unminifyStrategies[ext](value);
           console.log(`Unminify completed for key: ${key}`);
         } catch (err) {
-          console.warn(`Error unminifying content of ${key}:`, err.message);
+          console.warn(`Error unminifying content of ${key}:`, (err as Error).message);
           unminifiedContent[key] = value;
         }
       } else {
@@ -62,17 +62,19 @@ async function unminifyFile() {
     const outputDir = path.join(rootPath, 'dir-to-text', 'repo-to-text-recovered-output');
     if (!fs.existsSync(outputDir)) {
       console.log(`Creating output directory: ${outputDir}`);
-      fs.mkdirSync(outputDir);
+      fs.mkdirSync(outputDir, { recursive: true });
     }
 
-    const outputFilePath = path.join(outputDir, `unminified-${path.basename(filePath, '.yaml')}.dttc`);
+    // Fixed: changed .yaml to .dttc in path.basename to avoid unminified-filename.dttc.dttc double extension bug
+    const outputFilePath = path.join(outputDir, `unminified-${path.basename(filePath, '.dttc')}.dttc`);
     console.log(`Saving unminified DTTC to: ${outputFilePath}`);
 
     fs.writeFileSync(outputFilePath, yaml.dump(unminifiedContent), 'utf8');
     console.log(`Unminify completed: ${outputFilePath}`);
+    vscode.window.showInformationMessage(`Unminified file saved at ${outputFilePath}`);
   } catch (err) {
-    console.error(`Error processing DTTC file:`, err.message);
+    vscode.window.showErrorMessage(`Error processing DTTC file: ${(err as Error).message}`);
   }
 }
 
-module.exports = unminifyFile;
+export default unminifyFile;
